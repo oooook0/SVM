@@ -7,6 +7,7 @@ This project aims at implementing support vector machine using Sequantial Minima
 ## Reference
 
 `svm.py` -> implementation of Sequential Minimal Optimization
+
 `LinearSVM.py` -> implementation of Gradient Descent with Tensorflow
 
 ## Dependencies

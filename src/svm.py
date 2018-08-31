@@ -133,6 +133,7 @@ class SVM():
             cnt=cnt+1
         return i
 
+
 class Kernel():
 
     """
@@ -157,24 +158,25 @@ class Kernel():
     # gaussian kernels
     @staticmethod
     def gaussian(sigma):
-        return lambda x, y: \
-            np.exp(-np.sqrt(np.linalg.norm(x-y) ** 2 / (2 * sigma ** 2)))
+        return lambda x1, x2: \
+            np.exp(-np.sqrt(np.linalg.norm(x1-x2) ** 2 / (2 * sigma ** 2)))
 
     @staticmethod
-    def _polykernel(dimension, offset):
-        return lambda x, y: (offset + np.inner(x, y)) ** dimension
+    def _polykernel(degree, offset):
+        return lambda x1, x2: (offset + np.inner(x1, x2)) ** degree
 
     @classmethod
-    def inhomogenous_polynomial(cls, dimension):
-        return cls._polykernel(dimension=dimension, offset=1.0)
+    def inhomogenous_polynomial(cls, degree):
+        return cls._polykernel(degree=degree, offset=1.0)
 
     @classmethod
-    def homogenous_polynomial(cls, dimension):
-        return cls._polykernel(dimension=dimension, offset=0.0)
+    def homogenous_polynomial(cls, degree):
+        return cls._polykernel(degree=degree, offset=0.0)
 
     @staticmethod
     def hyperbolic_tangent(kappa, c):
-        return lambda x, y: np.tanh(kappa * np.dot(x, y) + c)
+        return lambda x1, x2: np.tanh(kappa * np.dot(x1, x2) + c)
+
 
 if __name__ == "__main__":
 
@@ -194,7 +196,7 @@ if __name__ == "__main__":
     #print(x_vals_test.shape)
     #print(y_vals_test.shape)
 
-    a = SVM(max_iter=10000, C=1.0, epsilon=0.001, kernels = Kernel.homogenous_polynomial(dimension = 2))
+    a = SVM(max_iter=10000, C=1.0, epsilon=0.001, kernels = Kernel.homogenous_polynomial(degree = 2))
     suppoertV, count = a.fit(X = x_vals_train, y = y_vals_train)
 
     print(suppoertV)
